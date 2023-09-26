@@ -81,7 +81,7 @@ class CollectionHelper
 
     /**
      * Преобразовать коллекцию в индексированный массив.
-     * 
+     *
      * @param Enumerable $collection Исходная коллекция
      * @param string $fieldName Имя поля для индекса (должно быть уникальным)
      * @return array
@@ -98,7 +98,7 @@ class CollectionHelper
 
     /**
      * Создать коллекцию сущностей.
-     * 
+     *
      * @param string $entityClass Имя класса сущности
      * @param array $data Массив значений атрибутов сущности
      * @param array $filedsOnly Назначать только указанные атрибуты
@@ -106,18 +106,24 @@ class CollectionHelper
      */
     public static function create(string $entityClass, array $data = [], array $filedsOnly = []): Enumerable
     {
+        $data = self::createEntityArray($entityClass, $data, $filedsOnly);
+        $collection = new Collection($data);
+        return $collection;
+    }
+
+    public static function createEntityArray(string $entityClass, array $data = [], array $filedsOnly = []): array
+    {
         foreach ($data as $key => $item) {
             $entity = new $entityClass;
             PropertyHelper::setAttributes($entity, $item, $filedsOnly);
             $data[$key] = $entity;
         }
-        $collection = new Collection($data);
-        return $collection;
+        return $data;
     }
 
     /**
      * Преобразовать коллекцию в массив.
-     * 
+     *
      * @param Enumerable $collection Исходная коллекция
      * @return array
      */
@@ -134,7 +140,7 @@ class CollectionHelper
 
     /**
      * Получить массив значений одного атрибута.
-     * 
+     *
      * @param Enumerable $collection Исходная коллекция
      * @param string $key Имя атрибута
      * @return array Массив значений атрибута
