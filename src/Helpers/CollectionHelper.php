@@ -145,7 +145,7 @@ class CollectionHelper
      * @param string $key Имя атрибута
      * @return array Массив значений атрибута
      */
-    public static function getColumn(Enumerable $collection, string $key): array
+    public static function getColumn(Enumerable|array $collection, string $key): array
     {
         $array = [];
         foreach ($collection as $entity) {
