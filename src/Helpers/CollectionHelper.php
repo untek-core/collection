@@ -86,7 +86,7 @@ class CollectionHelper
      * @param string $fieldName Имя поля для индекса (должно быть уникальным)
      * @return array
      */
-    public static function indexing(Enumerable $collection, string $fieldName): array
+    public static function indexing(Enumerable|array $collection, string $fieldName): array
     {
         $array = [];
         foreach ($collection as $item) {
