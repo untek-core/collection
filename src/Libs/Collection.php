@@ -2,6 +2,7 @@
 
 namespace Untek\Core\Collection\Libs;
 
+use Untek\Core\Code\Helpers\DeprecateHelper;
 use Untek\Core\Collection\Interfaces\Enumerable;
 
 /**
@@ -16,11 +17,15 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection implements
      */
     public function reverse()
     {
+        DeprecateHelper::hardThrow();
+
         return new static(array_reverse($this->toArray(), true));
     }
 
     public function sortBy($key): self
     {
+        DeprecateHelper::hardThrow();
+
         $sorCallback = function ($item1, $item2) use ($key) {
             $a = $item1->{$key};
             $b = $item2->{$key};

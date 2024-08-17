@@ -6,9 +6,11 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Untek\Core\Code\Helpers\DeprecateHelper;
 use Untek\Core\Instance\Helpers\PropertyHelper;
 use Untek\Core\Collection\Interfaces\Enumerable;
 use Untek\Core\Collection\Libs\Collection;
+use Untek\Tool\Dev\Trace\Facades\DebugBacktrace;
 
 /**
  * Хэлпер для работы с коллекциями.
@@ -27,6 +29,8 @@ class CollectionHelper
      */
     public static function where(Enumerable $collection, $field, $operator, $value)
     {
+        DeprecateHelper::hardThrow();
+
         $expr = new Comparison($field, $operator, $value);
         $criteria = new Criteria();
         $criteria->andWhere($expr);
@@ -42,6 +46,8 @@ class CollectionHelper
      */
     public static function merge(Enumerable $collection, Enumerable $source): Enumerable
     {
+        DeprecateHelper::hardThrow();
+
         $result = clone $collection;
         self::appendCollection($result, $source);
         return $result;
@@ -55,6 +61,8 @@ class CollectionHelper
      */
     public static function appendCollection(Enumerable $collection, Enumerable $source): void
     {
+        DeprecateHelper::hardThrow();
+
         foreach ($source as $item) {
             $collection->add($item);
         }
@@ -69,6 +77,8 @@ class CollectionHelper
      */
     public static function chunk(Enumerable $collection, int $size): Enumerable
     {
+        DeprecateHelper::hardThrow();
+
         if ($size <= 0) {
             return new Collection();
         }
@@ -88,6 +98,8 @@ class CollectionHelper
      */
     public static function indexing(Enumerable|array $collection, string $fieldName): array
     {
+//        DeprecateHelper::hardThrow();
+
         $array = [];
         foreach ($collection as $item) {
             $pkValue = PropertyHelper::getValue($item, $fieldName);
@@ -106,6 +118,8 @@ class CollectionHelper
      */
     public static function create(string $entityClass, array $data = [], array $filedsOnly = []): Enumerable
     {
+        DeprecateHelper::hardThrow();
+
         $data = self::createEntityArray($entityClass, $data, $filedsOnly);
         $collection = new Collection($data);
         return $collection;
@@ -113,6 +127,8 @@ class CollectionHelper
 
     public static function createEntityArray(string $entityClass, array $data = [], array $filedsOnly = []): array
     {
+        DeprecateHelper::hardThrow();
+
         foreach ($data as $key => $item) {
             $entity = new $entityClass;
             PropertyHelper::setAttributes($entity, $item, $filedsOnly);
@@ -129,6 +145,8 @@ class CollectionHelper
      */
     public static function toArray(Enumerable $collection): array
     {
+        DeprecateHelper::hardThrow();
+
         $serializer = new Serializer([new ObjectNormalizer()]);
         $normalizeHandler = function ($value) use ($serializer) {
             return $serializer->normalize($value);
